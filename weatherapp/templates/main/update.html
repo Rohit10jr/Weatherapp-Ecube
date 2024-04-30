@@ -19,5 +19,24 @@
         </button>
     </form>
 
+    {% for weather in weather_data %}
+        {% if weather.city == city.name %}
+            <p>City: {{ weather.city }}</p>
+            <p>Temperature: {{ weather.temperature }}</p>
+            <p>Humidity: {{ weather.humidity }}</p>
+            <p>Pressure: {{ weather.pressure }}</p>
+            <p>Sea Level: {{ weather.sea_level }}</p>
+            <p>Clouds: {{ weather.clouds }}</p>
+            <p>Temperature max: {{ weather.temp_max }}</p>
+            <p>Temperature min: {{ weather.temp_min }}</p>
+            <p>Wind speed: {{ weather.wind_speed }}</p>
+            <p>Wind degree: {{ weather.wind_deg }}</p>
+            <p>Country: {{ weather.country }}</p>
+            <p>Description: {{ weather.description }}</p>
+            <p>Icon: {{ weather.icon }}</p>
+            <!-- Add more weather data as needed -->
+        {% endif %}
+    {% endfor %}
+
 </body>
 </html>

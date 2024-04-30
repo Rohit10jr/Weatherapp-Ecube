@@ -1,107 +1,13 @@
-<!-- {% extends 'main/base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
-{% block content %}
+<!-- {% load static %}
 
-<div class="content-above">  </div>
-<div class="content">
-    <div class="content-form-div">
-    <form action="" method="post" autocomplete="off" enctype="multipart/form-data"  id="AdminForm">
-        <div>
-        {% csrf_token %}
-        <div class="appicon-div">
-
-                <div class="appicon-div2">
-                <img id="logo" src="{% if form.appicon.value %}{{ form.appicon.value.url }}{% else %}/media/default/photo.png{% endif %}" alt="appicon">
-            
-                <input type="file" id="id_appicon" name="appicon" accept="image/*" onchange="displayImage()">
-                </div>
-
-        </div>
-        <div class="appname-div">
-            {{ form.appname|as_crispy_field }}
-            {{ form.link|as_crispy_field }}
-        </div>
-        <div class="category-div">
-            {{ form.category|as_crispy_field }}
-            {{ form.subcategory|as_crispy_field }}
-        </div>
-        <div class="points-div">
-            {{ form.points|as_crispy_field }}
-        </div>
-        </div>
-        <div class="submit-div">
-
-                <button type="submit" class="submitform-button" id="submitform-button">Submit</button>
-            
-        </div>
-    </form>
-</div>
-</div>
-
-<script>
-    // Function to check if all fields are filled
-    document.addEventListener('DOMContentLoaded', function() {
-        function checkFields() {
-            var nameField = $('.appname-field').val().trim() !== '';
-            var linkField = $('.link-field').val().trim() !== '';
-            var catgField = $('.catg-field').val().trim() !== '';
-            var subcatgField = $('.subcatg-field').val().trim() !== '';
-            var pointsField = $('.points-field').val().trim() !== '';
-    
-            // $('.submitform-button').toggle(imageField && nameField && linkField && catgField && subcatgField && pointsField);
-            $('.submitform-button').toggle(nameField && linkField && catgField && subcatgField && pointsField);
-        }
-
-        // Trigger checkFields on input change
-
-        $('.appname-field, .link-field, .catg-field, .subcatg-field, .points-field').on('input', function() {
-        
-            checkFields();
-        });
-
-        // Initial check on page load
-        checkFields();
-    });
-
-
-// Drag and drop configuration
-    Dropzone.options.myDropzone = {
-        paramName: "appicon",  
-        maxFilesize: 2,        
-        acceptedFiles: "image/*",  
-        addRemoveLinks: true,   
-        dictDefaultMessage: "Drop your files here or click to upload",
-        init: function () {
-            this.on("complete", function (file) {
-                
-            });
-        }
-    };
-
-
-//  function to display select image 
-    function displayImage() {
-    var fileInput = document.getElementById('id_appicon');
-    var logo = document.getElementById('logo');
-
-    // Check if a file is selected
-    if (fileInput.files.length > 0) {
-      var file = fileInput.files[0];
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-        // Update the src attribute of the logo with the selected image
-        logo.src = e.target.result;
-      };
-
-      // Read the selected file as a data URL
-      reader.readAsDataURL(file);
-    }
-    }
-
-    
-</script>
-{% endblock content %}
-
- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img class="leagueimg" src="/media/default/thermometer_red.png" alt=""> 
+</body>
+</html> -->

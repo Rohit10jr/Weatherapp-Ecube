@@ -1,0 +1,9 @@
+# Ignore virtual environment
+env/
+
+# Ignore API configuration files
+api.json
+api2.json
+
+# Ignore environment variables file
+.env
