@@ -12,4 +12,9 @@ urlpatterns = [
 
     path('signup/', views.sign_up, name='signup'),
     path('logout/', views.user_logout, name='logout'),
+
+    path('plot/', views.plot_graph, name='plot_graph'),
+    path('plot2/', views.plot2, name='plot_graph'),
+
+    path('map/', views.map, name='map'),
 ]

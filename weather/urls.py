@@ -27,4 +27,4 @@ urlpatterns = [
     path('', lambda request: redirect('/app/')),
     path('', include('weatherapp.urls')),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

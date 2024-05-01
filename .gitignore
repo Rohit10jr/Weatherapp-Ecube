@@ -7,3 +7,6 @@ api2.json
 
 # Ignore environment variables file
 .env
+
+# Exclude .gitignore file
+.gitignore

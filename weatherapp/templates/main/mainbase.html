@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="shortcut icon" href="https://unpkg.com/leaflet/dist/images/marker-icon.png" type="image/x-icon">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title>Weather</title>
 </head>
 <body>
@@ -21,6 +23,7 @@
     
     <div class="column is-offset-4 is-4">
 
+        <img class="leagueimg" src="/media/default/thermometer_green.png" alt="" style="width: 100px; height: auto;">
 
         {% for weather in weather_data %}
         <div class="box">
@@ -29,14 +32,25 @@
                     <div class="content">
                         <p>
                             {% for city in cities %}
-                            {% if weather.city|lower == city.name|lower %}
+                            {% if weather.name|lower == city.name|lower %}
                             <a href="{% url 'update' pk=city.pk %}">{{ city.name }}</a>
                             {% endif %}
                             {% endfor %}
                             <br>
-                            <span class="subtitle">Temperatur: {{ weather.temperature }}° C,</span>
+                            <span class="subtitle">Temperature: {{ weather.temperature }}° C,</span>
                             <span class="subtitle"> Humidity: {{ weather.humidity }}° C</span>
                             <br>{{ weather.description }}
+
+                            <!-- {% if weather.temperature > 40 %}
+                                <img class="leagueimg" src="/media/default/thermometer_red.png" alt="" style="width: 100px; height: auto;">
+
+                            {% elif weather.temperature > 28 %}
+                                <img class="leagueimg" src="/media/default/thermometer_black.png" alt="" style="width: 100px; height: auto;">
+
+                            {% elif weather.temperature > 0 %}
+                                <img class="leagueimg" src="/media/default/thermometer_green.png" alt="" style="width: 100px; height: auto;">
+                            
+                            {% endif %} -->
                         </p>
                     </div>
                 </div>
@@ -45,8 +59,37 @@
         {% endfor %}
 
     </div>
+    <div id="map" style="width: 100%; height: 300px;"></div>
 
-    <!-- <script>
+	<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+	<script>
+		var mymap = L.map('map').setView([20.5937, 78.9629], 3); // Set view to India
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(mymap);
+
+		// Access cities variable passed from Python
+		var cities = {{ weather_data | safe }};
+
+		// Add markers for each city
+		cities.forEach(function(city) {
+            // console.log(city.lat, city.lon)
+            var popupContent = "<b>" + city.name + "</b><br>" +
+                       "Temperature: " + city.temperature + "<br>" +
+                       "Humidity: " + city.humidity;
+			L.marker([city.lat, city.lon]).addTo(mymap)
+				.bindPopup(popupContent)
+				// .openPopup();
+		});
+	</script>
+    
+</body>
+</html>
+
+
+<!-- <script>
         // Initialize an empty object to store weather data
 let weatherData = {};
 
@@ -88,5 +131,3 @@ function displayWeatherDetails(data) {
 }
 
     </script> -->
-</body>
-</html>

@@ -22,6 +22,8 @@
     {% for weather in weather_data %}
         {% if weather.city == city.name %}
             <p>City: {{ weather.city }}</p>
+            <p>lon: {{ weather.lon }}</p>
+            <p>lat: {{ weather.lat }}</p>
             <p>Temperature: {{ weather.temperature }}</p>
             <p>Humidity: {{ weather.humidity }}</p>
             <p>Pressure: {{ weather.pressure }}</p>
@@ -35,7 +37,7 @@
             <p>Description: {{ weather.description }}</p>
             <p>Icon: {{ weather.icon }}</p>
             <!-- Add more weather data as needed -->
-        {% endif %}
+        <!-- {% endif %} -->
     {% endfor %}
 
 </body>
