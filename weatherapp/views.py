@@ -18,6 +18,14 @@ from pathlib import Path
 import requests
 
 import folium
+
+import openmeteo_requests
+import requests_cache
+import pandas as pd
+from retry_requests import retry
+import matplotlib.pyplot as plt
+import mplcursors
+from datetime import datetime,timedelta
 # rohit 1234 rohitjr !@@#$%^1234
 
 env_path = Path('.') / '.env'
@@ -151,22 +159,105 @@ def city_detail(request):
     else:
         form = CityForm()
     # posts ={"greet": "hello"}
+    request.session['weather_data'] = weather_data
     return render(request, 'main/mainbase.html', {'cities': cities, 'form':form, 'weather_data' : weather_data})
 
 
 def city_update(request, pk):
     # weather_data = request.session.get('city_weather', None)
+    weather_data = request.session.get('weather_data', None)
 
-    # url="https://archive-api.open-meteo.com/v1/archive?latitude=13.0878&longitude=80.2785&start_date=2024-04-15&end_date=2024-04-29&hourly=temperature_2m,relative_humidity_2m"
-    
-    weather_data = request.session.get('city_weather', None)
-    
-    print("--------update--------")
+    print("-------update-------")
     print(weather_data)
-    print("----------------")
+    print("--------------------")
 
     city = get_object_or_404(City, id=pk, user=request.user)
+    print("--------city--------")
     print(city)
+    print("--------------------")
+
+    city_weather_data = None
+    for data in weather_data:
+        if data['name'] == city.name:
+            city_weather_data = data
+            break
+    city_lon = city_weather_data['lon']
+    city_lat = city_weather_data['lat']
+
+    print("-----lat and lon-----")
+    print(f'city_lat={city_lat} and city_lon={city_lon}')
+    print("----------------------")
+
+    # ---------open-meteo-config-----------
+    cache_session = requests_cache.CachedSession('.cache', expire_after = -1)
+    retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
+    openmeteo = openmeteo_requests.Client(session = retry_session)
+
+    # ---------getting start and end date---------- 
+    current_datetime = datetime.now()
+    current_date = current_datetime.date()
+    formatted_date = current_date.strftime("%Y-%m-%d")
+    date_10_days_ago = current_date - timedelta(days=10)
+
+    url = "https://archive-api.open-meteo.com/v1/archive"
+    params = {
+        "latitude": city_lat,
+        "longitude": city_lon,
+        "start_date": date_10_days_ago,
+        "end_date": formatted_date,
+        "hourly": ["temperature_2m", "relative_humidity_2m"]
+    }
+    responses = openmeteo.weather_api(url, params=params)
+
+    # Process first location. Add a for-loop for multiple locations or weather models
+    response = responses[0]
+    # print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
+    # print(f"Elevation {response.Elevation()} m asl")
+    # print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
+    # print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
+
+    # Process hourly data. The order of variables needs to be the same as requested.
+    hourly = response.Hourly()
+    hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
+    hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
+
+    hourly_data = {"date": pd.date_range(
+        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
+        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
+        freq = pd.Timedelta(seconds = hourly.Interval()),
+        inclusive = "left"
+    )}
+    hourly_data["temperature_2m"] = hourly_temperature_2m
+    hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
+
+    hourly_dataframe = pd.DataFrame(data = hourly_data)
+    # print(hourly_dataframe)
+
+    # Plot temperature
+    plt.plot(hourly_dataframe['date'], hourly_dataframe['temperature_2m'], label='Temperature (°C)', color='red')
+
+    # Plot relative humidity
+    plt.plot(hourly_dataframe['date'], hourly_dataframe['relative_humidity_2m'], label='Relative Humidity (%)', color='blue')
+
+    # Adding labels and title
+    plt.xlabel('Date and Time')
+    plt.ylabel('Value')
+    plt.title('Hourly Temperature and Relative Humidity')
+    plt.legend()
+    plt.grid(True)
+
+    plot_path = os.path.join(settings.MEDIA_ROOT, 'temp_plot.png')
+    # plt.savefig(plot_path)
+
+    # Save the plot to a temporary file
+    # plot_path = os.path.join(settings.STATIC_ROOT, 'temp_plot.png')
+    plt.savefig(plot_path)
+
+    # Show plot
+    # plt.xticks(rotation=45)
+    # plt.tight_layout()
+    # plt.show()
+
     if request.method == 'POST':
         form = CityForm(request.POST, instance=city)
         if form.is_valid():
@@ -174,7 +265,7 @@ def city_update(request, pk):
             return redirect('detail')
     else:
         form = CityForm(instance=city)  # Pass the city instance to the form
-    return render(request, 'main/update.html', {'form': form, 'city':city, 'weather_data':weather_data})  # 
+    return render(request, 'main/update.html', {'form': form, 'city':city, 'weather_data':weather_data, 'plot_path': plot_path})  # 
 
 
 def city_delete(request, pk):

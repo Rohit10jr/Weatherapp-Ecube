@@ -40,6 +40,7 @@
                             <span class="subtitle">Temperature: {{ weather.temperature }}° C,</span>
                             <span class="subtitle"> Humidity: {{ weather.humidity }}° C</span>
                             <br>{{ weather.description }}
+                            <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="">
 
                             <!-- {% if weather.temperature > 40 %}
                                 <img class="leagueimg" src="/media/default/thermometer_red.png" alt="" style="width: 100px; height: auto;">

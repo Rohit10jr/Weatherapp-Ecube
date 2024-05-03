@@ -20,8 +20,8 @@
     </form>
 
     {% for weather in weather_data %}
-        {% if weather.city == city.name %}
-            <p>City: {{ weather.city }}</p>
+        {% if weather.name == city.name %}
+            <p>City: {{ weather.name }}</p>
             <p>lon: {{ weather.lon }}</p>
             <p>lat: {{ weather.lat }}</p>
             <p>Temperature: {{ weather.temperature }}</p>
@@ -36,9 +36,12 @@
             <p>Country: {{ weather.country }}</p>
             <p>Description: {{ weather.description }}</p>
             <p>Icon: {{ weather.icon }}</p>
+            <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="">
             <!-- Add more weather data as needed -->
         <!-- {% endif %} -->
     {% endfor %}
+
+    <img src="/media/temp_plot.png" alt="Temperature and Humidity Plot" style="width: 300px; height: 130px;">
 
 </body>
 </html>
