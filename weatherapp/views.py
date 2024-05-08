@@ -36,7 +36,9 @@ user_api = os.environ['current_weather_data']
 
 @login_required(login_url="/login")
 def city_detail(request):
-    cities = City.objects.filter(user=request.user)
+    cities = City.objects.filter(user=request.user).order_by('-id')[:5]
+    # cities = City.objects.filter(user=request.user).order_by('-created_at').values('name').distinct()[:5]
+    # cities = City.objects.filter(user=request.user).order_by('-id').values('name').distinct()[:5]
     weather_data = []  
 
     for city in cities:
@@ -48,7 +50,7 @@ def city_detail(request):
         # city_weather = requests.get(url).json()
         city_weather = requests.get(url,params=PARAMS).json()
         # weather = 1
-        print(city_weather)
+        # print(city_weather)
 
         if 'cod' in city_weather and city_weather['cod'] == '404':
             # City not found, handle this case
@@ -155,12 +157,12 @@ def city_detail(request):
             todo = form.save(commit=False)
             todo.user = request.user
             todo.save()
-            return render(request, 'main/mainbase.html', {'cities': cities, 'form':form, 'weather_data' : weather_data})
+            return render(request, 'main/dark.html', {'cities': cities, 'form':form, 'weather_data' : weather_data})
     else:
         form = CityForm()
     # posts ={"greet": "hello"}
     request.session['weather_data'] = weather_data
-    return render(request, 'main/mainbase.html', {'cities': cities, 'form':form, 'weather_data' : weather_data})
+    return render(request, 'main/dark.html', {'cities': cities, 'form':form, 'weather_data' : weather_data})
 
 
 def city_update(request, pk):
@@ -197,13 +199,13 @@ def city_update(request, pk):
     current_datetime = datetime.now()
     current_date = current_datetime.date()
     formatted_date = current_date.strftime("%Y-%m-%d")
-    date_10_days_ago = current_date - timedelta(days=10)
+    date_14_days_ago = current_date - timedelta(days=14)
 
     url = "https://archive-api.open-meteo.com/v1/archive"
     params = {
         "latitude": city_lat,
         "longitude": city_lon,
-        "start_date": date_10_days_ago,
+        "start_date": date_14_days_ago,
         "end_date": formatted_date,
         "hourly": ["temperature_2m", "relative_humidity_2m"]
     }

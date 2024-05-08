@@ -1,0 +1,183 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="https://unpkg.com/leaflet/dist/images/marker-icon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="left-section">
+        <a href="">Home</a>
+        <a href="">About</a>
+        <a href="">Pricing</a>
+      </div>
+      <div class="right-section">
+        <a href="">{{user.username}}</a>
+        <a href="">Logout</a>
+
+      </div>
+      
+      <!-- <div class="search-form">
+        <input class="search-input" type="text" placeholder="Search..." /> -->
+
+        <!-- {{ user.username }}
+    <a href="/logout/">logout</a> -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="first-div">
+
+        <div class="heading">welcome to the weather finder</div>
+
+        <!-- <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Save</button>
+      </form> -->
+
+      <div class="search-container">
+
+        <form method="post" action="">
+          {% csrf_token %}
+          <!-- {{ form.as_p }} -->
+          {{ form.name|as_crispy_field }}
+          <button type="submit" class="search-button">Search</button>
+      </form>
+
+        <!-- <form action="">
+          <input type="text" id="search-input" placeholder="Search here">
+          <button type="submit" id="search-button">Search</button>
+        </form> -->
+      </div>
+
+      <div class="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </div>
+      
+      </div>
+      <div class="second-div">
+
+        {% for weather in weather_data %}
+            <div class="card">
+                <div class="card-content">
+                    <div class="city-name">
+                        {% for city in cities %}
+                            {% if weather.name|lower == city.name|lower %}
+                                <a href="{% url 'update' pk=city.pk %}" class="city-link">{{ city.name }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="weather-info">
+                        <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="" class="weather-icon">
+                        <p class="description">{{ weather.description }}</p>
+                        <p class="temperature">Temp: {{ weather.temperature }}° C,</p>
+                        <p class="humidity">Hum: {{ weather.humidity }}° C</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+        <!-- {% for weather in weather_data %}
+        <div class="card">
+          <div class="card-content">
+            <p>
+              {% for city in cities %}
+              {% if weather.name|lower == city.name|lower %}
+              <a href="{% url 'update' pk=city.pk %}">{{ city.name }}</a>
+              {% endif %}
+              {% endfor %}
+              <br>
+              <span class="subtitle">Temperature: {{ weather.temperature }}° C,</span>
+              <span class="subtitle"> Humidity: {{ weather.humidity }}° C</span>
+              <br>{{ weather.description }}
+              <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="">
+
+          </p>
+          </div>
+        </div>
+        {% endfor %} -->
+
+      </div>
+      <div class="third-div">
+        <div id="map"></div>
+      </div>
+      <div class="fourth-div">
+        <div class="content2">
+          Access current weather data for any location on Earth including over 200,000 cities! The data is frequently updated based on the global and local weather models, satellites, radars and a vast network of weather stations.
+  
+          Our technology Time Machine, has allowed us to enhance data in the Historical Weather Collection: historical weather data is now available for any coordinates
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <!-- <div class="footer"> -->
+      <div class="footer-section">
+        <h3>Technologies</h3>
+        <ul>
+          <li>Our technology</li>
+          <li>Accuracy and quality</li>
+          <li>Connect to station</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Terms & Conditions</h3>
+        <ul>
+          <li>Terms and conditions of sale</li>
+          <li>Privacy Policy</li>
+          <li>Website terms and conditions</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <ul>
+          <li>Blog</li>
+          <!-- <li>OpenWeather for Business</li> -->
+          <li>ChatBot assistant</li>
+          <li>Ask a question</li>
+        </ul>
+      </div>
+      <!-- </div> -->
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      var mymap = L.map('map').setView([20.5937, 78.9629], 3); // Set view to India
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      	maxZoom: 19,
+      	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mymap);
+
+      // Access cities variable passed from Python
+      var cities = {{ weather_data | safe }};
+
+      // Add markers for each city
+      cities.forEach(function(city) {
+                // console.log(city.lat, city.lon)
+                var popupContent = "<b>" + city.name + "</b><br>" +
+                           "Temperature: " + city.temperature + "<br>" +
+                           "Humidity: " + city.humidity;
+      	L.marker([city.lat, city.lon]).addTo(mymap)
+      		.bindPopup(popupContent)
+      		// .openPopup();
+      });
+    </script>
+  </body>
+</html>

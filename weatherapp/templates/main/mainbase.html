@@ -13,15 +13,15 @@
 <body>
     {{ user.username }}
     <a href="/logout/">logout</a>
-        <form method="post">
+        <!-- <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Save</button>
-        </form>
+        </form> -->
 
         <hr>
     
-    <div class="column is-offset-4 is-4">
+    <div class="offset-4">
 
         <img class="leagueimg" src="/media/default/thermometer_green.png" alt="" style="width: 100px; height: auto;">
 

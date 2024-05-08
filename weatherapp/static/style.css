@@ -1,0 +1,326 @@
+/* .content{
+    border:2px black;
+} */
+
+.offset-4 {
+  color: red;
+  border: 2px solid limegreen;
+  align-items: center;
+}
+
+/* ----------- */
+
+body,
+html {
+  background-color: #121212;
+  color: white;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  scrollbar-width: none;
+}
+
+/* navbar */
+
+.header {
+  background-color: #333333;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* sticky */
+  /* position: sticky; */
+  top: 0;
+  z-index: 1000;
+}
+
+.header a {
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+/* .search-form {
+  display: flex;
+  align-items: center;
+}
+.search-form input[type="text"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  background-color: #333333;
+  color: white;
+} */
+
+.search-input::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.input{
+  color:red;
+  border-radius: 10px;
+}
+
+/* main container and divs */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  width: 100%;
+  color: white;
+}
+
+.first-div {
+  background-color: rgb(95, 169, 235);
+  /* flex:2; */
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* font-size: 40px; */
+}
+
+.second-div {
+  /* background-color: aliceblue; */
+  /* flex:10; */
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.third-div {
+  background-color: blanchedalmond;
+  /* flex:15; */
+  /* min-height: 300px; */
+  height: 400px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  /* margin:20px 40px 20px 40px;
+    border:6px solid #5e5e5e;
+    border-radius: 8px; */
+}
+
+.fourth-div {
+  background-color: rgb(231, 161, 55);
+  /* flex:4; */
+
+  height: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  /* margin:20px 40px 20px 40px;
+    border:6px solid #5e5e5e; */
+}
+
+
+/* first div title, search bar and intro*/
+
+.heading{
+  font-size: 40px;
+}
+
+
+.content {
+  text-align: center;
+  width: 100%;
+  overflow-y: auto;
+  font-size: 15px;
+}
+
+  /* search box */
+
+  .search-container {
+    position: relative;
+    width: 350px;
+    /* margin: 0 auto; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Align items to the end */
+    margin: 10px;
+}
+
+        .search-input {
+    width: 100%;
+    height: 50px;
+    /* padding: 10px; */
+    border: none;
+    border-radius: 25px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    margin-right: 5px;
+     /* Reduce the margin between input and button */
+
+}
+
+.search-input::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+.search-input:focus::placeholder {
+    color: transparent;
+}
+
+.search-input:hover, #search-input:focus {
+    border-color: #fd9c9c;
+}
+
+.search-input:hover::placeholder, 
+.search-input:focus::placeholder {
+            color: #bdacf8;
+        }
+
+/* Styles for the search button */
+.search-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 120px;
+    height: 100%;
+    background-color: #555;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+
+    padding: 12px 25px; /* Increase button padding */
+}
+
+.search-button:hover {
+    background-color: #333;
+}
+
+
+/* weather card */
+
+.card {
+  width: 180px;
+  height: 240px;
+  background-color: #333333; /* White */
+  /* border: 6px solid #ffdada; */
+  border: 6px solid #5e5e5e;
+  border-radius: 12px; /* Rounded outside borders */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px 5px 10px 5px;
+  /* overflow: hidden;  */
+  /* Clip content and borders to ensure rounded inside corners */
+}
+.card-content {
+  padding: 10px;
+}
+
+.city-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.city-link {
+  text-decoration: none;
+  color: white;
+}
+
+.weather-info {
+  text-align: center;
+  color: white;
+}
+
+.weather-icon {
+  width: 70px; /* Adjust as needed */
+  height: 70px; /* Adjust as needed */
+  margin: 5px;
+}
+
+.temperature, .humidity {
+  margin: 0;
+  color: white;
+}
+/* 
+.description {
+  color: white;
+} */
+
+
+/* map section */
+#map {
+  width: 90%;
+  height: 80%;
+  background-color: #333333;
+
+  border: 6px solid #5e5e5e;
+  border-radius: 12px;
+
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px 5px 10px 5px;
+}
+
+/* final div content */
+
+.content2 {
+  text-align: center;
+  width: 100%;
+  margin: 0px 50px 20px 50px;
+  overflow-y: auto;
+  font-size: 18px;
+}
+
+
+/* footer */
+
+footer {
+  background-color: #333333;
+  padding: 20px;
+  text-align: center;
+  /* position: fixed; */
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+.footer-section {
+  flex: 1;
+}
+.footer-section h3 {
+  margin-top: 0;
+}
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+.footer-section ul li {
+  margin-bottom: 10px;
+}
