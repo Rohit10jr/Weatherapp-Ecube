@@ -1,0 +1,72 @@
+{% extends 'main/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="first-div">
+  <div class="heading">welcome to the weather finder</div>
+
+  <div class="search-container">
+    <form method="post" action="" autocomplete="off" onsubmit="clearForm()">
+      {% csrf_token %}
+      <!-- {{ form.as_p }} -->
+      {{ form.name|as_crispy_field }}
+      <button type="submit" class="search-button">Search</button>
+    </form>
+  </div>
+
+  <div class="content">
+    <p>
+      Welcome to our weather information platform! We are passionate about providing accurate and up-to-date weather forecasts to help you plan your day. 
+    </p>
+    <p>
+      Explore our site to learn more about weather phenomena, historical weather events. Enjoy exploring the fascinating world of weather with us!
+    </p>
+    <p>
+      From current temperature readings to detailed forecasts and fun weather facts, we've got you covered. 
+    </p>
+  </div>
+</div>
+<div class="second-div">
+  {% for weather in weather_data %}
+  <div class="card">
+    <div class="card-content">
+      <div class="city-name">
+        {% for city in cities %} 
+        {% if weather.name|lower == city.name|lower %}
+        <a href="{% url 'update' pk=city.pk %}" class="city-link"
+          >{{ weather.name }}</a
+        >
+        {% endif %} 
+        {% endfor %}
+      </div>
+      <div class="weather-info">
+        <img
+          src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png"
+          alt=""
+          class="weather-icon"
+        />
+        <p class="description">{{ weather.description }}</p>
+        <p class="temperature">Temp: {{ weather.temperature }}° C,</p>
+        <p class="humidity">Hum: {{ weather.humidity }}° C</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+<div class="third-div">
+  <div id="map"></div>
+</div>
+<div class="fourth-div">
+  <div class="content2">
+    Access current weather data for any location on Earth including over 200,000
+    cities! The data is frequently updated based on the global and local weather
+    models, satellites, radars and a vast network of weather stations. Our
+    technology Time Machine, has allowed us to enhance data in the Historical
+    Weather Collection: historical weather data is now available for any
+    coordinates
+  </div>
+</div>
+
+{% endblock content %}

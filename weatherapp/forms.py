@@ -18,7 +18,18 @@ class CityForm(ModelForm):
         model = City
         fields = ['name']
         widgets = {
-            'name': TextInput(attrs={'class': 'search-input', 'placeholder': 'City Name'}),
+            'name': TextInput(attrs={'class': 'search-input', 'placeholder': 'City Name', 'autocomplete': 'off'}),
+        }
+        labels = {
+            'name': False,
+        }
+
+class LandingForm(ModelForm):
+    class Meta:
+        model = City
+        fields = ['name']
+        widgets = {
+            'name': TextInput(attrs={'class': 'search-bar2', 'autocomplete': 'off'}),
         }
         labels = {
             'name': False,

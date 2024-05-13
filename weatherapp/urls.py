@@ -17,4 +17,5 @@ urlpatterns = [
     path('plot2/', views.plot2, name='plot_graph'),
 
     path('map/', views.map, name='map'),
+    path('about/', views.about, name='about')
 ]

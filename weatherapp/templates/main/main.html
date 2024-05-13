@@ -1,0 +1,98 @@
+<!-- {% load crispy_forms_tags %} -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="https://unpkg.com/leaflet/dist/images/marker-icon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="left-section">
+        <a href="/app">Home</a>
+        <a href="/about">About</a>
+        <!-- <a href="">Pricing</a> -->
+      </div>
+      <div class="right-section">
+        <a href="">{{user.username}}</a>
+        <a class="logout-button" href="/logout/">logout</a>
+      </div>
+    </div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+
+    </div>
+
+    <footer>
+      <!-- <div class="footer"> -->
+      <div class="footer-section">
+        <h3>Technologies</h3>
+        <ul>
+          <li>Our technology</li>
+          <li>Accuracy and quality</li>
+          <li>Connect to station</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Terms & Conditions</h3>
+        <ul>
+          <li>Terms and conditions of sale</li>
+          <li>Privacy Policy</li>
+          <li>Website terms and conditions</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <ul>
+          <li>Blog</li>
+          <!-- <li>OpenWeather for Business</li> -->
+          <li>ChatBot assistant</li>
+          <li>Ask a question</li>
+        </ul>
+      </div>
+      <!-- </div> -->
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // function clearForm() {
+        //     var inputField = document.querySelector('.search-input');
+        //     if (inputField) {
+        //         inputField.value = ''; // Clear the input field
+        //     }
+        // }
+
+      var mymap = L.map('map').setView([20.5937, 78.9629], 2); // Set view to India
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      	maxZoom: 19,
+      	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mymap);
+
+      // Access cities variable passed from Python
+      var cities = {{ weather_data | safe }};
+
+      // Add markers for each city
+      cities.forEach(function(city) {
+                // console.log(city.lat, city.lon)
+                var popupContent = "<b>" + city.name + "</b><br>" +
+                           "Temperature: " + city.temperature + "<br>" +
+                           "Humidity: " + city.humidity;
+      	L.marker([city.lat, city.lon]).addTo(mymap)
+      		.bindPopup(popupContent)
+      		// .openPopup();
+      });
+    </script>
+  </body>
+</html>
