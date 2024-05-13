@@ -462,12 +462,12 @@ footer {
 
 .search-bar2:hover,
 .search-bar2:focus {
-  border-color: #f7a6a6;
+  border-color: #fd9c9c;
 }
 
 .search-bar2:hover::placeholder,
 .search-bar2:focus::placeholder {
-  color: #9cacf3;
+  color:  #bdacf8;
 }
 
 /* buttons */

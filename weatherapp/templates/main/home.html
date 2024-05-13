@@ -28,6 +28,7 @@
   </div>
 </div>
 <div class="second-div">
+  {% if weather_data %}
   {% for weather in weather_data %}
   <div class="card">
     <div class="card-content">
@@ -35,7 +36,7 @@
         {% for city in cities %} 
         {% if weather.name|lower == city.name|lower %}
         <a href="{% url 'update' pk=city.pk %}" class="city-link"
-          >{{ weather.name }}</a
+          >{{ weather.name|title }}</a
         >
         {% endif %} 
         {% endfor %}
@@ -53,6 +54,27 @@
     </div>
   </div>
   {% endfor %}
+  {% else %}
+  <div class="card">
+    <div class="card-content">
+      <div class="city-name">
+        <a href="" class="city-link"
+          >Your City</a
+        >
+      </div>
+      <div class="weather-info">
+        <img
+          src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png"
+          alt=""
+          class="weather-icon"
+        />
+        <p class="description">clouds</p>
+        <p class="temperature">Temp: 10° C,</p>
+        <p class="humidity">Hum: 20° C</p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 
 </div>
 <div class="third-div">
