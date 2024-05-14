@@ -30,10 +30,10 @@ Edit or Remove Cities: You can edit or remove cities from your dashboard as per 
 
 ## Technologies Used:
 
-Django: The web framework used for developing the application.
-OpenWeather API: To fetch real-time and historical weather data.
-HTML/CSS: For frontend development and styling.
-PostgreSQL: Database management system for storing user data and weather information.
+**Django**: The web framework used for developing the application.
+**OpenWeather API**: To fetch real-time and historical weather data.
+**HTML/CSS**: For frontend development and styling.
+**SQL**: Database management system for storing user data and weather information.
 
 ## Installation:
 
