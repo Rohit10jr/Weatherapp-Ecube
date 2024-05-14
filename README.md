@@ -6,6 +6,8 @@
 Welcome to WeatherNow, a super cool Django weather app that provides you with real-time weather data for your favorite cities along with a historical data feature for the past two weeks. 
 With WeatherNow, you can stay informed about the weather conditions of your preferred locations, helping you plan your activities accordingly.
 
+![weatherapp](https://github.com/Rohit10jr/Weatherapp-Ecube/assets/130643902/6d18dc79-4325-41cc-995f-a457112ecf5c)
+
 ## Table of Contents
 
 1. [Features](#features)
