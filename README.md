@@ -12,9 +12,8 @@ With WeatherNow, you can stay informed about the weather conditions of your pref
 2. [how to Use](#how-to-use)
 3. [Tehcnologies Used](#technologies-used)
 4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Contributing](#contributing)
-7. [Acknowledgments](#acknowledgments)
+5. [Contributing](#contributing)
+6. [Acknowledgments](#acknowledgments)
    
 ## Features:
 
