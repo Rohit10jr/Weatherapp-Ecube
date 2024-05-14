@@ -67,12 +67,8 @@ Access the application at http://localhost:8000/ in your web browser.
 
 Contributions are welcome! If you have any suggestions, feature requests, or bug reports, feel free to open an issue or submit a pull request.
 
-License:
+## Acknowledgments
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Contact:
-
-For any inquiries or support, please contact your.email@example.com.
+This project was developed with Python and Django and relies on various open-source libraries. Thanks to the Python and Flask community and contributors behind these tool
 
 Enjoy using WeatherNow and stay updated with the weather conditions of your favorite cities!
