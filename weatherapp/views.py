@@ -66,7 +66,7 @@ def city_detail(request):
 def get_weather_data(cities):
     weather_data = []  
 
-    print(cities)
+    # print(cities)
 
     for city in cities:
         # url = base_url.format(city, user_api)
