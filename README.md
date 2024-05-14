@@ -51,14 +51,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 4. Apply database migrations
-
-Apply migrations:
-
-Copy code
+```
 python manage.py migrate
-Run the server:
-Copy code
+```
+5. Runserver
+```
 python manage.py runserver
+```
 Access the application at http://localhost:8000/ in your web browser.
 
 ## Contributing:
