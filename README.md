@@ -37,14 +37,20 @@ PostgreSQL: Database management system for storing user data and weather informa
 
 ## Installation:
 
-Clone the repository:
-bash
-Copy code
-git clone https://github.com/yourusername/weathernow.git
-Install dependencies:
-Copy code
+1. Clone the repository:
+```
+https://github.com/Rohit10jr/slack-url-shortener.git
+```  
+2. Create a virtual environment and activate it:
+```
+python -m venv venv
+source venv/bin/activate
+```
+3. Install the project dependencies:
+```
 pip install -r requirements.txt
-Set up your PostgreSQL database and update the database settings in settings.py accordingly.
+```
+4. Apply database migrations
 
 Apply migrations:
 
